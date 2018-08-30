@@ -11,8 +11,6 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
-
-$router->get('/test', 'Controller@index');
+$router->get('/', 'TelegramController@index');
+$router->get('/set', 'TelegramController@set');
+$router->get('/ololo-tele-hook', 'TelegramController@hook');
