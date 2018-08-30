@@ -11,6 +11,10 @@
 |
 */
 
+
 $router->get('/', 'TelegramController@index');
 $router->get('/set', 'TelegramController@set');
 $router->get('/ololo-tele-hook', 'TelegramController@hook');
+
+
+$router->get('test_new_api', 'TelegramController@test_new_api');

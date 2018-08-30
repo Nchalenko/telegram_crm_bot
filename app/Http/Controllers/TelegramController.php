@@ -22,6 +22,29 @@ class TelegramController extends BaseController
         $this->commandsPath = env('COMMANDS_PATH');
         $this->hookUrl = 'https://telegram-crm-bot.gq/ololo-tele-hook';
     }
+    
+
+    public function test_new_api()
+    {
+        error_log(print_r(__FUNCTION__,1));
+        $telegram = new Api($this->apiKey);
+
+
+
+        $response = $telegram->getMe();
+        error_log(print_r(1,1));
+        error_log(print_r($response,1));
+
+        $response = $telegram->setWebhook(['url' => $this->hookUrl]);
+        error_log(print_r(2,1));
+        error_log(print_r($response,1));
+
+        $updates = $telegram->getWebhookUpdates();
+        
+        error_log(print_r(3,1));
+        error_log(print_r($updates,1));
+
+    }
 
     public function index()
     {
@@ -58,11 +81,12 @@ class TelegramController extends BaseController
                 ]);
             }
 
-//            TelegramBot\Request::sendMessage([
-//                'chat_id' => 371302071,
-//                'text' => 'https://core.telegram.org',
-//                'parse_mode' => 'HTML'
-//            ]);
+            Longman\TelegramBot\Request::sendMessage([
+                'chat_id' => 371302071,
+
+                'text' => 'https://core.telegram.org',
+                'parse_mode' => 'HTML'
+            ]);
 
 //            $telegram->addCommandsPaths([__DIR__ . $this->commandsPath]);
 //            $c = $telegram->getCommandsList();
@@ -106,8 +130,7 @@ class TelegramController extends BaseController
         try {
             // Create Telegram API object
             $telegram = new Longman\TelegramBot\Telegram($this->apiKey, $this->botName);
-            $result = $telegram->setWebhook($this->hookUrl, ['certificate' => '/etc/letsencrypt/live/telegram-crm-bot.gq/fullchain.pem']);
-
+            $result = $telegram->setWebhook($this->hookUrl);
             error_log(print_r($result,1));
 
             // Handle telegram webhook request
@@ -124,7 +147,9 @@ class TelegramController extends BaseController
 
     public function set()
     {
-        try {
+        error_log(print_r(__FUNCTION__,1));
+
+	try {
             // Create Telegram API object
             $telegram = new Longman\TelegramBot\Telegram($this->apiKey, $this->botName);
 
